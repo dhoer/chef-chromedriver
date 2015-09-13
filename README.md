@@ -32,9 +32,11 @@ Include recipe in a run list or cookbook to install ChromeDriver.
 
 ### Attributes
 
-- `node['chromedriver']['node']['host']` - Defaults to 'ip'
-- `node['chromedriver']['node']['port']` - Defaults to 5555
-- `node['chromedriver']['node']['jvm_args']` - Defaults to nil
+- `node['chromedriver']['version']` - ChromeDriver version to download.
+- `node['chromedriver']['url']` -  ChromeDriver dowload URL prefix.
+- `node['chromedriver']['home']['windows']` - ChromeDriver home directory for windows. Defaults to `C:/chromedriver`.
+- `node['chromedriver']['home']['linux']` - ChromeDriver home directory for both linux and macosx. Defaults to 
+`/opt/chromedriver`.
 
 ## Getting Help
 
