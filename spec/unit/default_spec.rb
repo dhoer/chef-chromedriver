@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'chromedriver::default' do
   context 'windows' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(file_cache_path: 'C:/chef/cache', platform: 'windows', version: '2008R2') do |node|
+      ChefSpec::SoloRunner.new(file_cache_path: 'C:/chef/cache', platform: 'windows', version: '2008R2') do
         ENV['SYSTEMDRIVE'] = 'C:'
       end.converge(described_recipe)
     end
