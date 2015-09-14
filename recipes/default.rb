@@ -12,9 +12,9 @@ version = node['chromedriver']['version']
 name = "chromedriver_#{os}#{bit}-#{version}"
 
 if platform?('windows')
-  home = node['chromedriver']['home']['windows']
+  home = node['chromedriver']['windows']['home']
 else
-  home = node['chromedriver']['home']['linux']
+  home = node['chromedriver']['unix']['home']
 end
 
 directory home do
@@ -30,18 +30,19 @@ end
 cache_path = "#{Chef::Config[:file_cache_path]}/#{name}.zip"
 
 if platform?('windows')
+  # TODO: Replace powershell and windows_zipfile with windows_zip
   # Fix windows_zipfile - rubyzip failure to allocate memory (requires PowerShell 3 or greater & .NET Framework 4)
   batch 'unzip chromedriver' do
     code "powershell.exe -nologo -noprofile -command \"& { Add-Type -A 'System.IO.Compression.FileSystem';"\
       " [IO.Compression.ZipFile]::ExtractToDirectory('#{cache_path}', '#{driver_path}'); }\""
     action :nothing
-    only_if { ChromeDriver.powershell_version >= 3 }
+    only_if { chromedriver_powershell_version >= 3 }
   end
 
   windows_zipfile driver_path do
     source cache_path
     action :nothing
-    not_if { ChromeDriver.powershell_version >= 3 }
+    not_if { chromedriver_powershell_version >= 3 }
   end
 end
 
@@ -62,33 +63,28 @@ remote_file 'download chromedriver' do
   notifies :run, 'execute[unzip chromedriver]', :immediately unless platform?('windows')
 end
 
-link "#{home}/chromedriver" do
+link = "#{home}/chromedriver"
+
+link link do
   to "#{driver_path}/chromedriver"
 end
 
 case node['platform_family']
 when 'windows'
-  env 'PATH' do
+  env 'webdriver.chrome.driver' do
     action :modify
     delim ::File::PATH_SEPARATOR
-    value home
+    value link
   end
 when 'mac_os_x'
-  directory '/etc/paths.d' do
-    mode 00755
-  end
-
-  file '/etc/paths.d/chromedriver' do
-    content home
-    mode 00755
-  end
+  execute "launchctl setenv webdriver.chrome.driver \"#{link}\""
 else
   directory '/etc/profile.d' do
     mode 00755
   end
 
   file '/etc/profile.d/chromedriver.sh' do
-    content "export PATH=#{home}:$PATH"
+    content "export webdriver.chrome.driver=#{link}"
     mode 00755
   end
 end

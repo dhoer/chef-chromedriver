@@ -8,7 +8,8 @@
 [travis]: https://travis-ci.org/dhoer/chef-chromedriver
 [github]: https://github.com/dhoer/chef-chromedriver/issues
 
-Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver).
+Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver). Also ensures environment variable
+webdriver.chrome.driver is set.
 
 ## Requirements
 
@@ -24,7 +25,7 @@ Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver)
 
 ### Cookbooks
 
-- windows - Required for Windows when PowerShell 3 or greater is not installed
+- windows - used when PowerShell 3 or greater is not installed on Windows 
 
 ## Usage
 
@@ -32,11 +33,28 @@ Include recipe in a run list or cookbook to install ChromeDriver.
 
 ### Attributes
 
-- `node['chromedriver']['version']` - ChromeDriver version to download.
-- `node['chromedriver']['url']` -  ChromeDriver dowload URL prefix.
-- `node['chromedriver']['home']['windows']` - ChromeDriver home directory for windows. Defaults to `C:/chromedriver`.
-- `node['chromedriver']['home']['linux']` - ChromeDriver home directory for both linux and macosx. Defaults to 
-`/opt/chromedriver`.
+- `node['chromedriver']['version']` - Version to download.
+- `node['chromedriver']['url']` -  URL download prefix.
+- `node['chromedriver']['windows']['home']` - Home directory for windows. Default `%SYSTEMDRIVE%\chromedriver`.
+- `node['chromedriver']['unix']['home']` - Home directory for both linux and macosx. Default `/opt/chromedriver`.
+
+#### Install selenium node with chrome capability
+
+```ruby
+include_recipe 'chrome'
+include_recipe 'chromedriver'
+
+node.set['selenium']['node']['capabilities'] = [
+  {
+    browserName: 'chrome',
+    maxInstances: 1,
+    version: chrome_version,
+    seleniumProtocol: 'WebDriver'
+  }
+]
+
+include_recipe 'selenium::node'
+```
 
 ## Getting Help
 
