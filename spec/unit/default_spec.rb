@@ -3,8 +3,9 @@ require 'spec_helper'
 describe 'chromedriver::default' do
   context 'windows' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(
-        file_cache_path: 'C:/chef/cache', platform: 'windows', version: '2008R2').converge(described_recipe)
+      ChefSpec::SoloRunner.new(file_cache_path: 'C:/chef/cache', platform: 'windows', version: '2008R2') do |node|
+        ENV['SYSTEMDRIVE'] = 'C:'
+      end.converge(described_recipe)
     end
 
     it 'creates home directory' do
@@ -42,9 +43,9 @@ describe 'chromedriver::default' do
       )
     end
 
-    it 'sets PATH' do
-      expect(chef_run).to modify_env('PATH').with(
-        value: 'C:/chromedriver'
+    it 'sets webdriver.chrome.driver env variable' do
+      expect(chef_run).to modify_env('webdriver.chrome.driver').with(
+        value: 'C:/chromedriver/chromedriver'
       )
     end
   end
@@ -110,12 +111,8 @@ describe 'chromedriver::default' do
       )
     end
 
-    it 'touch path.d' do
-      expect(chef_run).to create_directory('/etc/paths.d')
-    end
-
-    it 'add chromedriver path' do
-      expect(chef_run).to create_file('/etc/paths.d/chromedriver')
+    it 'set webdriver.chrome.driver env variable' do
+      expect(chef_run).to run_execute('launchctl setenv webdriver.chrome.driver "/opt/chromedriver/chromedriver"')
     end
 
     it 'links driver' do
