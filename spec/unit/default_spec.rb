@@ -39,13 +39,14 @@ describe 'chromedriver::default' do
 
     it 'links driver' do
       expect(chef_run).to create_link('C:/chromedriver/chromedriver.exe').with(
-        to: 'C:/chromedriver/chromedriver_win32-2.19/chromedriver'
+        to: 'C:/chromedriver/chromedriver_win32-2.19/chromedriver.exe'
       )
     end
 
     it 'sets PATH' do
-      expect(chef_run).to modify_env('PATH').with(
-        value: 'C:/chromedriver/chromedriver'
+      expect(chef_run).to modify_env('chromedriver path').with(
+        key_name: 'PATH',
+        value: 'C:/chromedriver'
       )
     end
   end
