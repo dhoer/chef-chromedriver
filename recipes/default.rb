@@ -63,28 +63,45 @@ remote_file 'download chromedriver' do
   notifies :run, 'execute[unzip chromedriver]', :immediately unless platform?('windows')
 end
 
-link = "#{home}/chromedriver"
+exe = platform_family?('windows') ? 'chromedriver.exe' : 'chromedriver'
 
-link link do
-  to "#{driver_path}/chromedriver"
+link "#{home}/#{exe}" do
+  to "#{driver_path}/#{exe}"
 end
 
 case node['platform_family']
 when 'windows'
-  env 'webdriver.chrome.driver' do
+  env 'chromedriver path' do
+    key_name 'PATH'
     action :modify
     delim ::File::PATH_SEPARATOR
-    value link
+    value home
   end
 when 'mac_os_x'
-  execute "launchctl setenv webdriver.chrome.driver \"#{link}\""
-else
+  directory '/etc/paths.d' do
+    mode 0755
+  end
+
+  file '/etc/paths.d/chromedriver' do
+    content home
+    mode 0755
+  end
+when 'rhel'
   directory '/etc/profile.d' do
-    mode 00755
+    mode 0755
   end
 
   file '/etc/profile.d/chromedriver.sh' do
-    content "export webdriver.chrome.driver=#{link}"
-    mode 00755
+    content "pathmunge #{home}"
+    mode 0755
+  end
+else
+  directory '/etc/profile.d' do
+    mode 0755
+  end
+
+  file '/etc/profile.d/chromedriver.sh' do
+    content "export PATH=$PATH:#{home}"
+    mode 0755
   end
 end

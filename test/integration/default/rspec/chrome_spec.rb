@@ -11,10 +11,10 @@ unless RbConfig::CONFIG['host_os'] =~ /linux/ && `cat /etc/*-release` =~ /CentOS
       @selenium.quit
     end
 
-    it 'Should return display resolution of 1280x1024' do
+    it 'Should return display resolution of 1024 x 768' do
       @selenium.get 'http://www.whatismyscreenresolution.com/'
       element = @selenium.find_element(:id, 'resolutionNumber')
-      expect(element.text).to eq('1280 x 1024')
+      expect(element.text).to eq('1024 x 768')
     end
   end
 end

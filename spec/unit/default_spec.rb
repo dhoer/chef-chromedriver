@@ -43,14 +43,14 @@ describe 'chromedriver::default' do
       )
     end
 
-    it 'sets webdriver.chrome.driver env variable' do
-      expect(chef_run).to modify_env('webdriver.chrome.driver').with(
+    it 'sets PATH' do
+      expect(chef_run).to modify_env('PATH').with(
         value: 'C:/chromedriver/chromedriver'
       )
     end
   end
 
-  context 'linux' do
+  context 'rhel' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
         file_cache_path: '/var/chef/cache', platform: 'centos', version: '7.0').converge(described_recipe)
@@ -84,12 +84,27 @@ describe 'chromedriver::default' do
     end
 
     it 'add chromedriver path' do
-      expect(chef_run).to create_file('/etc/profile.d/chromedriver.sh')
+      expect(chef_run).to create_file('/etc/profile.d/chromedriver.sh').with(
+        content: 'pathmunge /opt/chromedriver'
+      )
     end
 
     it 'links driver' do
       expect(chef_run).to create_link('/opt/chromedriver/chromedriver').with(
         to: '/opt/chromedriver/chromedriver_linux64-2.19/chromedriver'
+      )
+    end
+  end
+
+  context 'debian' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        file_cache_path: '/var/chef/cache', platform: 'ubuntu', version: '14.04').converge(described_recipe)
+    end
+
+    it 'add chromedriver path' do
+      expect(chef_run).to create_file('/etc/profile.d/chromedriver.sh').with(
+        content: 'export PATH=$PATH:/opt/chromedriver'
       )
     end
   end
@@ -111,8 +126,12 @@ describe 'chromedriver::default' do
       )
     end
 
-    it 'set webdriver.chrome.driver env variable' do
-      expect(chef_run).to run_execute('launchctl setenv webdriver.chrome.driver "/opt/chromedriver/chromedriver"')
+    it 'touch path.d' do
+      expect(chef_run).to create_directory('/etc/paths.d')
+    end
+
+    it 'add chromedriver path' do
+      expect(chef_run).to create_file('/etc/paths.d/chromedriver')
     end
 
     it 'links driver' do

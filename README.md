@@ -2,19 +2,16 @@
 
 [![Cookbook Version](http://img.shields.io/cookbook/v/chromedriver.svg?style=flat-square)][supermarket]
 [![Build Status](http://img.shields.io/travis/dhoer/chef-chromedriver.svg?style=flat-square)][travis]
-[![GitHub Issues](http://img.shields.io/github/issues/dhoer/chef-chromedriver.svg?style=flat-square)][github]
 
 [supermarket]: https://supermarket.chef.io/cookbooks/chromedriver
 [travis]: https://travis-ci.org/dhoer/chef-chromedriver
-[github]: https://github.com/dhoer/chef-chromedriver/issues
 
-Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver). Also ensures environment variable
-webdriver.chrome.driver is set.
+Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver). 
 
 ## Requirements
 
 - Chrome (this cookbook does not install Chrome)
-- Chef 12.3+
+- Chef 11.14+
 
 ### Platforms
 
@@ -25,7 +22,7 @@ webdriver.chrome.driver is set.
 
 ### Cookbooks
 
-- windows - used when PowerShell 3 or greater is not installed on Windows 
+- windows 
 
 ## Usage
 
