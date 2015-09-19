@@ -10,8 +10,8 @@ Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver)
 
 ## Requirements
 
+- Chef 11.16+
 - Chrome (this cookbook does not install Chrome)
-- Chef 11.14+
 
 ### Platforms
 
