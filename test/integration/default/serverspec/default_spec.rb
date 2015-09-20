@@ -6,7 +6,7 @@ describe 'selenium::chromedriver' do
       it { should be_file }
     end
   elsif !(os[:family] == 'redhat' && os[:release].split('.')[0] == '6')
-    describe file('/opt/chromedriver/chromedriver') do
+    describe file('/usr/bin/chromedriver') do
       it { should be_symlink }
     end
   end
