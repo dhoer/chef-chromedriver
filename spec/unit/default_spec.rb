@@ -13,13 +13,13 @@ describe 'chromedriver::default' do
     end
 
     it 'creates sub-directory' do
-      expect(chef_run).to create_directory('C:/chromedriver/chromedriver_win32-2.19')
+      expect(chef_run).to create_directory('C:/chromedriver/chromedriver_win32-2.20')
     end
 
     it 'downloads driver' do
       expect(chef_run).to create_remote_file('download chromedriver').with(
-        path: "#{Chef::Config[:file_cache_path]}/chromedriver_win32-2.19.zip",
-        source: 'https://chromedriver.storage.googleapis.com/2.19/chromedriver_win32.zip'
+        path: "#{Chef::Config[:file_cache_path]}/chromedriver_win32-2.20.zip",
+        source: 'https://chromedriver.storage.googleapis.com/2.20/chromedriver_win32.zip'
       )
     end
 
@@ -28,18 +28,18 @@ describe 'chromedriver::default' do
         code: "powershell.exe -nologo -noprofile -command \"& { Add-Type -A "\
           "'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory("\
           "'C:/chef/cache/chromedriver_win32.zip', "\
-          "'C:/chromedriver/chromedriver_win32-2.19'); }\"")
+          "'C:/chromedriver/chromedriver_win32-2.20'); }\"")
     end
 
     it 'unzips via window_zipfile' do
-      expect(chef_run).to_not unzip_windows_zipfile_to('C:/chromedriver/chromedriver_win32-2.19').with(
+      expect(chef_run).to_not unzip_windows_zipfile_to('C:/chromedriver/chromedriver_win32-2.20').with(
         source: 'C:/chef/cache/chromedriver_win32.zip'
       )
     end
 
     it 'links driver' do
       expect(chef_run).to create_link('C:/chromedriver/chromedriver.exe').with(
-        to: 'C:/chromedriver/chromedriver_win32-2.19/chromedriver.exe'
+        to: 'C:/chromedriver/chromedriver_win32-2.20/chromedriver.exe'
       )
     end
 
@@ -62,13 +62,13 @@ describe 'chromedriver::default' do
     end
 
     it 'creates sub-directory' do
-      expect(chef_run).to create_directory('/opt/chromedriver/chromedriver_linux64-2.19')
+      expect(chef_run).to create_directory('/opt/chromedriver/chromedriver_linux64-2.20')
     end
 
     it 'downloads driver' do
       expect(chef_run).to create_remote_file('download chromedriver').with(
-        path: "#{Chef::Config[:file_cache_path]}/chromedriver_linux64-2.19.zip",
-        source: 'https://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip'
+        path: "#{Chef::Config[:file_cache_path]}/chromedriver_linux64-2.20.zip",
+        source: 'https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip'
       )
     end
 
@@ -82,7 +82,7 @@ describe 'chromedriver::default' do
 
     it 'links driver' do
       expect(chef_run).to create_link('/usr/bin/chromedriver').with(
-        to: '/opt/chromedriver/chromedriver_linux64-2.19/chromedriver'
+        to: '/opt/chromedriver/chromedriver_linux64-2.20/chromedriver'
       )
     end
   end
@@ -94,19 +94,19 @@ describe 'chromedriver::default' do
     end
 
     it 'creates directory' do
-      expect(chef_run).to create_directory('/opt/chromedriver/chromedriver_mac32-2.19')
+      expect(chef_run).to create_directory('/opt/chromedriver/chromedriver_mac32-2.20')
     end
 
     it 'downloads driver' do
       expect(chef_run).to create_remote_file('download chromedriver').with(
-        path: "#{Chef::Config[:file_cache_path]}/chromedriver_mac32-2.19.zip",
-        source: 'https://chromedriver.storage.googleapis.com/2.19/chromedriver_mac32.zip'
+        path: "#{Chef::Config[:file_cache_path]}/chromedriver_mac32-2.20.zip",
+        source: 'https://chromedriver.storage.googleapis.com/2.20/chromedriver_mac32.zip'
       )
     end
 
     it 'links driver' do
       expect(chef_run).to create_link('/usr/bin/chromedriver').with(
-        to: '/opt/chromedriver/chromedriver_mac32-2.19/chromedriver'
+        to: '/opt/chromedriver/chromedriver_mac32-2.20/chromedriver'
       )
     end
   end

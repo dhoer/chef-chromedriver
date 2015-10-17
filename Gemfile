@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'foodcritic', '~> 4.0'
+gem 'foodcritic', '~> 5.0'
 gem 'rubocop', '~> 0.31'
 gem 'chefspec', '~> 4.2'
-gem 'berkshelf', '~> 3.3'
+gem 'berkshelf', '~> 3.1.5'
 gem 'chef', '~> 11.16'
 gem 'net-ssh', '= 2.9.1'
 
