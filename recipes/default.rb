@@ -1,3 +1,5 @@
+require 'net/http'
+
 bit = '32'
 case node['platform']
 when 'windows'
@@ -8,7 +10,8 @@ else
   os = 'linux'
   bit = '64' if node['kernel']['machine'] == 'x86_64'
 end
-version = node['chromedriver']['version']
+version = node['chromedriver']['version'] ||\
+          Net::HTTP.get_response(URI.parse('https://chromedriver.storage.googleapis.com/LATEST_RELEASE')).body
 name = "chromedriver_#{os}#{bit}-#{version}"
 
 if platform?('windows')

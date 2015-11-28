@@ -30,7 +30,7 @@ Include recipe in a run list or cookbook to install ChromeDriver.
 
 ### Attributes
 
-- `node['chromedriver']['version']` - Version to download.
+- `node['chromedriver']['version']` - Version to download. If not specified default to latest, as read from https://chromedriver.storage.googleapis.com/LATEST_RELEASE.
 - `node['chromedriver']['url']` -  URL download prefix.
 - `node['chromedriver']['windows']['home']` - Home directory for windows. Default `%SYSTEMDRIVE%\chromedriver`.
 - `node['chromedriver']['unix']['home']` - Home directory for both linux and macosx. Default `/opt/chromedriver`.
