@@ -1,4 +1,4 @@
-default['chromedriver']['version'] = '2.20'
+default['chromedriver']['version'] = 'LATEST_RELEASE'
 default['chromedriver']['url'] = 'https://chromedriver.storage.googleapis.com'
 
 default['chromedriver']['windows']['home'] = "#{ENV['SYSTEMDRIVE']}/chromedriver"

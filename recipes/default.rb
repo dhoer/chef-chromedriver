@@ -10,8 +10,16 @@ else
   os = 'linux'
   bit = '64' if node['kernel']['machine'] == 'x86_64'
 end
-version = node['chromedriver']['version'] ||\
-          Net::HTTP.get_response(URI.parse('https://chromedriver.storage.googleapis.com/LATEST_RELEASE')).body
+
+version = node['chromedriver']['version']
+if version == 'LATEST_RELEASE'
+  uri = URI("#{node['chromedriver']['url']}/#{version}")
+  res = Net::HTTP.start(uri.host, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
+    http.get uri.request_uri
+  end
+  version = res.body
+end
+
 name = "chromedriver_#{os}#{bit}-#{version}"
 
 if platform?('windows')
