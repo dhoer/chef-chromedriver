@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+VERSION = '2.21'.freeze
+
 describe 'chromedriver::default' do
   context 'windows' do
     let(:chef_run) do
@@ -13,33 +15,33 @@ describe 'chromedriver::default' do
     end
 
     it 'creates sub-directory' do
-      expect(chef_run).to create_directory('C:/chromedriver/chromedriver_win32-2.20')
+      expect(chef_run).to create_directory("C:/chromedriver/chromedriver_win32-#{VERSION}")
     end
 
     it 'downloads driver' do
       expect(chef_run).to create_remote_file('download chromedriver').with(
-        path: "#{Chef::Config[:file_cache_path]}/chromedriver_win32-2.20.zip",
-        source: 'https://chromedriver.storage.googleapis.com/2.20/chromedriver_win32.zip'
+        path: "#{Chef::Config[:file_cache_path]}/chromedriver_win32-#{VERSION}.zip",
+        source: "https://chromedriver.storage.googleapis.com/#{VERSION}/chromedriver_win32.zip"
       )
     end
 
     it 'unzips via powershell' do
       expect(chef_run).to_not run_batch('unzip chromedriver').with(
-        code: "powershell.exe -nologo -noprofile -command \"& { Add-Type -A "\
+        code: 'powershell.exe -nologo -noprofile -command "& { Add-Type -A '\
           "'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory("\
           "'C:/chef/cache/chromedriver_win32.zip', "\
-          "'C:/chromedriver/chromedriver_win32-2.20'); }\"")
+          "'C:/chromedriver/chromedriver_win32-#{VERSION}'); }\"")
     end
 
     it 'unzips via window_zipfile' do
-      expect(chef_run).to_not unzip_windows_zipfile_to('C:/chromedriver/chromedriver_win32-2.20').with(
+      expect(chef_run).to_not unzip_windows_zipfile_to("C:/chromedriver/chromedriver_win32-#{VERSION}").with(
         source: 'C:/chef/cache/chromedriver_win32.zip'
       )
     end
 
     it 'links driver' do
       expect(chef_run).to create_link('C:/chromedriver/chromedriver.exe').with(
-        to: 'C:/chromedriver/chromedriver_win32-2.20/chromedriver.exe'
+        to: "C:/chromedriver/chromedriver_win32-#{VERSION}/chromedriver.exe"
       )
     end
 
@@ -62,13 +64,13 @@ describe 'chromedriver::default' do
     end
 
     it 'creates sub-directory' do
-      expect(chef_run).to create_directory('/opt/chromedriver/chromedriver_linux64-2.20')
+      expect(chef_run).to create_directory("/opt/chromedriver/chromedriver_linux64-#{VERSION}")
     end
 
     it 'downloads driver' do
       expect(chef_run).to create_remote_file('download chromedriver').with(
-        path: "#{Chef::Config[:file_cache_path]}/chromedriver_linux64-2.20.zip",
-        source: 'https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip'
+        path: "#{Chef::Config[:file_cache_path]}/chromedriver_linux64-#{VERSION}.zip",
+        source: "https://chromedriver.storage.googleapis.com/#{VERSION}/chromedriver_linux64.zip"
       )
     end
 
@@ -82,7 +84,7 @@ describe 'chromedriver::default' do
 
     it 'links driver' do
       expect(chef_run).to create_link('/usr/bin/chromedriver').with(
-        to: '/opt/chromedriver/chromedriver_linux64-2.20/chromedriver'
+        to: "/opt/chromedriver/chromedriver_linux64-#{VERSION}/chromedriver"
       )
     end
   end
@@ -94,19 +96,19 @@ describe 'chromedriver::default' do
     end
 
     it 'creates directory' do
-      expect(chef_run).to create_directory('/opt/chromedriver/chromedriver_mac32-2.20')
+      expect(chef_run).to create_directory("/opt/chromedriver/chromedriver_mac32-#{VERSION}")
     end
 
     it 'downloads driver' do
       expect(chef_run).to create_remote_file('download chromedriver').with(
-        path: "#{Chef::Config[:file_cache_path]}/chromedriver_mac32-2.20.zip",
-        source: 'https://chromedriver.storage.googleapis.com/2.20/chromedriver_mac32.zip'
+        path: "#{Chef::Config[:file_cache_path]}/chromedriver_mac32-#{VERSION}.zip",
+        source: "https://chromedriver.storage.googleapis.com/#{VERSION}/chromedriver_mac32.zip"
       )
     end
 
     it 'links driver' do
       expect(chef_run).to create_link('/usr/bin/chromedriver').with(
-        to: '/opt/chromedriver/chromedriver_mac32-2.20/chromedriver'
+        to: "/opt/chromedriver/chromedriver_mac32-#{VERSION}/chromedriver"
       )
     end
   end

@@ -17,16 +17,11 @@ if version == 'LATEST_RELEASE'
   res = Net::HTTP.start(uri.host, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
     http.get uri.request_uri
   end
-  version = res.body
+  version = res.body.strip
 end
 
 name = "chromedriver_#{os}#{bit}-#{version}"
-
-if platform?('windows')
-  home = node['chromedriver']['windows']['home']
-else
-  home = node['chromedriver']['unix']['home']
-end
+home = platform?('windows') ? node['chromedriver']['windows']['home'] : node['chromedriver']['unix']['home']
 
 directory home do
   action :create
