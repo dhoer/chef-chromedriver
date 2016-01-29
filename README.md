@@ -66,7 +66,7 @@ override_attributes(
 
 This will download the ChromeDriver that best matches version and platform criteria e.g., Linux x64 platform will 
 match https://s3.amazonaws.com/mybucket/chromedriver/2.21/chromedriver_linux64.zip. Note that ChromeDriver path must 
-be the same as that found under http://chromedriver.storage.googleapis.com/index.html page.
+be the same as that found under http://chromedriver.storage.googleapis.com/index.html.
 
 ## Getting Help
 
