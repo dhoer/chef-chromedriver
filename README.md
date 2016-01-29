@@ -75,7 +75,7 @@ be the same as that found under http://chromedriver.storage.googleapis.com/index
 
 ## Contributing
 
-Please refer to [CONTRIBUTING](https://github.com/dhoer/chef-chromedriver/graphs/contributors).
+Please refer to [CONTRIBUTING](https://github.com/dhoer/chef-chromedriver/blob/master/CONTRIBUTING.md).
 
 ## License
 

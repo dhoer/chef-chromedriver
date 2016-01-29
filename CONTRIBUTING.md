@@ -6,14 +6,15 @@ community. Please be nice to one another.
 ### Coding
 
 * Pick a task:
-  * Offer feedback on open [pull requests](https://github.com/dhoer/chef-selenium/pulls).
-  * Review open [issues](https://github.com/dhoer/chef-selenium/issues) for things to help on.
-  * [Create an issue](https://github.com/dhoer/chef-selenium/issues/new) to start a discussion on additions or features.
+  * Offer feedback on open [pull requests](https://github.com/dhoer/chef-chromedriver/pulls).
+  * Review open [issues](https://github.com/dhoer/chef-chromedriver/issues) for things to help on.
+  * [Create an issue](https://github.com/dhoer/chef-chromedriver/issues/new) to start a discussion on 
+  additions or features.
 * Fork the project, add your changes and tests to cover them in a topic branch.
-* Commit your changes and rebase against `dhoer/chef-selenium` to ensure everything is up to date.
-* [Submit a pull request](https://github.com/dhoer/chef-selenium/compare/).
+* Commit your changes and rebase against `dhoer/chef-chromedriver` to ensure everything is up to date.
+* [Submit a pull request](https://github.com/dhoer/chef-chromedriver/compare/).
 
 ### Non-Coding
 
-* Offer feedback on open [issues](https://github.com/dhoer/chef-selenium/issues).
+* Offer feedback on open [issues](https://github.com/dhoer/chef-chromedriver/issues).
 * Organize or volunteer at events.
