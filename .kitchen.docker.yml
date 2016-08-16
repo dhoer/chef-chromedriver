@@ -74,6 +74,5 @@ platforms:
 suites:
 - name: default
   run_list:
-    - chromedriver_test::packages
-    - chromedriver_test::default
+    - chromedriver_test
   attributes:
