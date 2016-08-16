@@ -36,7 +36,7 @@ end
 cache_path = "#{Chef::Config[:file_cache_path]}/#{name}.zip"
 
 if platform?('windows')
-  # TODO: Replace powershell and windows_zipfile with windows_zip
+  # TODO: Replace batch and windows_zipfile with windows_powershell
   # Fix windows_zipfile - rubyzip failure to allocate memory (requires PowerShell 3 or greater & .NET Framework 4)
   batch 'unzip chromedriver' do
     code "powershell.exe -nologo -noprofile -command \"& { Add-Type -A 'System.IO.Compression.FileSystem';"\
