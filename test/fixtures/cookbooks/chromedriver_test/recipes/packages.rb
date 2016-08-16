@@ -8,3 +8,9 @@ when 'rhel'
   package 'gcc'
   package 'libffi-devel'
 end
+
+# Chrome install runs at compile time
+execute 'sudo apt-get update' do
+  action :nothing
+  only_if { platform_family?('debian') }
+end.run_action(:run)
