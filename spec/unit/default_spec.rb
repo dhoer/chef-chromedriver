@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-VERSION = '2.21'.freeze
+VERSION = '2.23'.freeze
 
 describe 'chromedriver::default' do
   context 'windows' do
@@ -30,7 +30,8 @@ describe 'chromedriver::default' do
         code: 'powershell.exe -nologo -noprofile -command "& { Add-Type -A '\
           "'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory("\
           "'C:/chef/cache/chromedriver_win32.zip', "\
-          "'C:/chromedriver/chromedriver_win32-#{VERSION}'); }\"")
+          "'C:/chromedriver/chromedriver_win32-#{VERSION}'); }\""
+      )
     end
 
     it 'unzips via window_zipfile' do
@@ -56,7 +57,8 @@ describe 'chromedriver::default' do
   context 'linux' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
-        file_cache_path: '/var/chef/cache', platform: 'centos', version: '7.0').converge(described_recipe)
+        file_cache_path: '/var/chef/cache', platform: 'centos', version: '7.0'
+      ).converge(described_recipe)
     end
 
     it 'creates home directory' do
@@ -92,7 +94,8 @@ describe 'chromedriver::default' do
   context 'mac_os_x' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
-        file_cache_path: '/var/chef/cache', platform: 'mac_os_x', version: '10.10').converge(described_recipe)
+        file_cache_path: '/var/chef/cache', platform: 'mac_os_x', version: '10.10'
+      ).converge(described_recipe)
     end
 
     it 'creates directory' do
