@@ -66,6 +66,6 @@ platforms:
 suites:
 - name: default
   run_list:
-    - chromedriver_test::package
+    - chromedriver_test::packages
     - chromedriver_test
   attributes:
