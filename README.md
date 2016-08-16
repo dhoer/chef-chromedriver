@@ -1,10 +1,14 @@
 # Selenium ChromeDriver Cookbook
 
-[![Cookbook Version](http://img.shields.io/cookbook/v/chromedriver.svg?style=flat-square)][supermarket]
-[![Build Status](http://img.shields.io/travis/dhoer/chef-chromedriver.svg?style=flat-square)][travis]
+[![Cookbook Version](http://img.shields.io/cookbook/v/chromedriver.svg?style=flat-square)][cookbook]
+[![linux](http://img.shields.io/travis/dhoer/chef-chromedriver/master.svg?label=linux&style=flat-square)][linux]
+[![win](https://img.shields.io/appveyor/ci/dhoer/chef-chromedriver/master.svg?label=windows&style=flat-square)][win]
 
-[supermarket]: https://supermarket.chef.io/cookbooks/chromedriver
-[travis]: https://travis-ci.org/dhoer/chef-chromedriver
+[cookbook]: https://supermarket.chef.io/cookbooks/chromedriver
+[linux]: https://travis-ci.org/dhoer/chef-chromedriver
+[win]: https://ci.appveyor.com/project/dhoer/chef-chromedriver
+
+
 
 Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver). 
 

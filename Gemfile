@@ -14,4 +14,3 @@ group :integration do
   gem 'kitchen-dokken', '~> 0.0'
   gem 'kitchen-localhost', '~> 0.3'
 end
-
