@@ -4,7 +4,7 @@ gem 'foodcritic'
 gem 'rubocop'
 gem 'chefspec'
 gem 'berkshelf', '~> 4.0'
-gem 'chef', '~> 11.18'
+gem 'chef', '~> 12.10'
 
 group :integration do
   gem 'winrm-fs', '~> 0.4'

@@ -2,13 +2,13 @@
 
 [![Cookbook Version](http://img.shields.io/cookbook/v/chromedriver.svg?style=flat-square)][cookbook]
 [![linux](http://img.shields.io/travis/dhoer/chef-chromedriver/master.svg?label=linux&style=flat-square)][linux]
+[![osx](http://img.shields.io/travis/dhoer/chef-chromedriver/macosx.svg?label=macosx&style=flat-square)][osx]
 [![win](https://img.shields.io/appveyor/ci/dhoer/chef-chromedriver/master.svg?label=windows&style=flat-square)][win]
 
 [cookbook]: https://supermarket.chef.io/cookbooks/chromedriver
 [linux]: https://travis-ci.org/dhoer/chef-chromedriver
+[osx]: https://travis-ci.org/dhoer/chef-chromedriver/branches
 [win]: https://ci.appveyor.com/project/dhoer/chef-chromedriver
-
-
 
 Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver). 
 
@@ -19,9 +19,9 @@ Installs ChromeDriver (https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver)
 
 ### Platforms
 
-- CentOS, RedHat
+- CentOS, RedHat, Fedora
+- Debian, Ubuntu
 - Mac OS X
-- Ubuntu
 - Windows
 
 ### Cookbooks
