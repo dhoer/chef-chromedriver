@@ -2,7 +2,7 @@
 
 ## 1.2.2 - 2016/08/16
 
-- Fix #3 Chef::Exceptions::InvalidRemoteFileURI
+- Fix #6 Updated chromedriver_powershell_version to access stdout property
 
 ## 1.2.1 - 2016/01/29
 

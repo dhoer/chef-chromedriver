@@ -4,11 +4,13 @@ maintainer_email 'dennis.hoer@gmail.com'
 license 'MIT'
 description 'Selenium WebDriver for Chrome'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '1.2.1'
+version '1.2.2'
 
 supports 'centos'
-supports 'redhat'
+supports 'debian'
+supports 'fedora'
 supports 'mac_os_x'
+supports 'redhat'
 supports 'ubuntu'
 supports 'windows'
 
