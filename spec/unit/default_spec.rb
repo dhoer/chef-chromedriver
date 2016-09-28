@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-VERSION = '2.23'.freeze
+VERSION = '2.24'.freeze
 
 describe 'chromedriver::default' do
   context 'windows' do
