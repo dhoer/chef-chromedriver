@@ -35,13 +35,13 @@ if platform?('windows') # ~FC023
         " [IO.Compression.ZipFile]::ExtractToDirectory('#{cache_path}', '#{driver_path}');"
     action :nothing
   end
-end
+else
+  package 'unzip' unless platform?('mac_os_x')
 
-package 'unzip' unless platform?('windows', 'mac_os_x')
-
-execute "unzip #{cache_path}" do
-  command "unzip -o #{cache_path} -d #{driver_path} && chmod -R 0755 #{driver_path}"
-  action :nothing
+  execute "unzip #{cache_path}" do
+    command "unzip -o #{cache_path} -d #{driver_path} && chmod -R 0755 #{driver_path}"
+    action :nothing
+  end
 end
 
 remote_file "download #{cache_path}" do
