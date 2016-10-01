@@ -14,7 +14,7 @@ supports 'redhat'
 supports 'ubuntu'
 supports 'windows'
 
-depends 'windows', '~> 1.0'
+depends 'windows', '>= 1'
 
 source_url 'https://github.com/dhoer/chef-chromedriver' if respond_to?(:source_url)
 issues_url 'https://github.com/dhoer/chef-chromedriver/issues' if respond_to?(:issues_url)
