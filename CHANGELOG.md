@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.3 - 2016/09/30
+
+- Add proxy support
+- Relax windows cookbook version
+
 ## 1.2.2 - 2016/08/16
 
 - Fix #6 Updated chromedriver_powershell_version to access stdout property
