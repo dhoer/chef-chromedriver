@@ -1,11 +1,9 @@
 require 'spec_helper'
 
-VERSION = '2.24'.freeze
-
 describe 'chromedriver::default' do
   context 'windows' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(file_cache_path: 'C:/chef/cache', platform: 'windows', version: '2008R2') do
+      ChefSpec::SoloRunner.new(file_cache_path: CACHE, platform: 'windows', version: '2008R2') do
         ENV['SYSTEMDRIVE'] = 'C:'
       end.converge(described_recipe)
     end
@@ -19,24 +17,28 @@ describe 'chromedriver::default' do
     end
 
     it 'downloads driver' do
-      expect(chef_run).to create_remote_file('download chromedriver').with(
+      expect(chef_run).to create_remote_file(
+        "download #{Chef::Config[:file_cache_path]}/chromedriver_win32-#{VERSION}.zip"
+      ).with(
         path: "#{Chef::Config[:file_cache_path]}/chromedriver_win32-#{VERSION}.zip",
         source: "https://chromedriver.storage.googleapis.com/#{VERSION}/chromedriver_win32.zip"
       )
     end
 
     it 'unzips via powershell' do
-      expect(chef_run).to_not run_batch('unzip chromedriver').with(
-        code: 'powershell.exe -nologo -noprofile -command "& { Add-Type -A '\
+      expect(chef_run).to_not run_powershell_script(
+        "unzip #{Chef::Config[:file_cache_path]}/chromedriver_win32-#{VERSION}.zip"
+      ).with(
+        code: 'Add-Type -A '\
           "'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory("\
           "'C:/chef/cache/chromedriver_win32.zip', "\
-          "'C:/chromedriver/chromedriver_win32-#{VERSION}'); }\""
+          "'C:/chromedriver/chromedriver_win32-#{VERSION}');"
       )
     end
 
-    it 'unzips via window_zipfile' do
-      expect(chef_run).to_not unzip_windows_zipfile_to("C:/chromedriver/chromedriver_win32-#{VERSION}").with(
-        source: 'C:/chef/cache/chromedriver_win32.zip'
+    it 'unzips driver' do
+      expect(chef_run).to_not run_execute(
+        "unzip #{Chef::Config[:file_cache_path]}/chromedriver_win32-#{VERSION}.zip"
       )
     end
 
@@ -56,9 +58,7 @@ describe 'chromedriver::default' do
 
   context 'linux' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(
-        file_cache_path: '/var/chef/cache', platform: 'centos', version: '7.0'
-      ).converge(described_recipe)
+      ChefSpec::SoloRunner.new(file_cache_path: CACHE, platform: 'centos', version: '7.0').converge(described_recipe)
     end
 
     it 'creates home directory' do
@@ -70,14 +70,18 @@ describe 'chromedriver::default' do
     end
 
     it 'downloads driver' do
-      expect(chef_run).to create_remote_file('download chromedriver').with(
+      expect(chef_run).to create_remote_file(
+        "download #{Chef::Config[:file_cache_path]}/chromedriver_linux64-#{VERSION}.zip"
+      ).with(
         path: "#{Chef::Config[:file_cache_path]}/chromedriver_linux64-#{VERSION}.zip",
         source: "https://chromedriver.storage.googleapis.com/#{VERSION}/chromedriver_linux64.zip"
       )
     end
 
     it 'unzips driver' do
-      expect(chef_run).to_not run_execute('unzip chromedriver')
+      expect(chef_run).to_not run_execute(
+        "unzip #{Chef::Config[:file_cache_path]}/chromedriver_linux64-#{VERSION}.zip"
+      )
     end
 
     it 'installs zip package' do
@@ -94,7 +98,7 @@ describe 'chromedriver::default' do
   context 'mac_os_x' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
-        file_cache_path: '/var/chef/cache', platform: 'mac_os_x', version: '10.10'
+        file_cache_path: CACHE, platform: 'mac_os_x', version: '10.10'
       ).converge(described_recipe)
     end
 
@@ -103,9 +107,17 @@ describe 'chromedriver::default' do
     end
 
     it 'downloads driver' do
-      expect(chef_run).to create_remote_file('download chromedriver').with(
+      expect(chef_run).to create_remote_file(
+        "download #{Chef::Config[:file_cache_path]}/chromedriver_mac32-#{VERSION}.zip"
+      ).with(
         path: "#{Chef::Config[:file_cache_path]}/chromedriver_mac32-#{VERSION}.zip",
         source: "https://chromedriver.storage.googleapis.com/#{VERSION}/chromedriver_mac32.zip"
+      )
+    end
+
+    it 'unzips driver' do
+      expect(chef_run).to_not run_execute(
+        "unzip #{Chef::Config[:file_cache_path]}/chromedriver_mac32-#{VERSION}.zip"
       )
     end
 

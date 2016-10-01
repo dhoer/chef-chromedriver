@@ -12,9 +12,7 @@ else
 end
 
 version = node['chromedriver']['version']
-if version == 'LATEST_RELEASE'
-  version = Chef::HTTP.new(node['chromedriver']['url']).get('/LATEST_RELEASE').strip
-end
+version = Chef::HTTP.new(node['chromedriver']['url']).get('/LATEST_RELEASE').strip if version == 'LATEST_RELEASE'
 
 name = "chromedriver_#{os}#{bit}-#{version}"
 home = platform?('windows') ? node['chromedriver']['windows']['home'] : node['chromedriver']['unix']['home']
@@ -31,38 +29,28 @@ end
 
 cache_path = "#{Chef::Config[:file_cache_path]}/#{name}.zip"
 
-if platform?('windows')
-  # TODO: Replace batch and windows_zipfile with windows_powershell
-  # Fix windows_zipfile - rubyzip failure to allocate memory (requires PowerShell 3 or greater & .NET Framework 4)
-  batch 'unzip chromedriver' do
-    code "powershell.exe -nologo -noprofile -command \"& { Add-Type -A 'System.IO.Compression.FileSystem';"\
-      " [IO.Compression.ZipFile]::ExtractToDirectory('#{cache_path}', '#{driver_path}'); }\""
+if platform?('windows') # ~FC023
+  powershell_script "unzip #{cache_path}" do
+    code "Add-Type -A 'System.IO.Compression.FileSystem';" \
+        " [IO.Compression.ZipFile]::ExtractToDirectory('#{cache_path}', '#{driver_path}');"
     action :nothing
-    only_if { chromedriver_powershell_version >= 3 }
   end
+else
+  package 'unzip' unless platform?('mac_os_x')
 
-  windows_zipfile driver_path do
-    source cache_path
+  execute "unzip #{cache_path}" do
+    command "unzip -o #{cache_path} -d #{driver_path} && chmod -R 0755 #{driver_path}"
     action :nothing
-    not_if { chromedriver_powershell_version >= 3 }
   end
 end
 
-package 'unzip' unless platform?('windows', 'mac_os_x')
-
-execute 'unzip chromedriver' do
-  command "unzip -o #{cache_path} -d #{driver_path} && chmod -R 0755 #{driver_path}"
-  action :nothing
-end
-
-remote_file 'download chromedriver' do
+remote_file "download #{cache_path}" do
   path cache_path
   source "#{node['chromedriver']['url']}/#{version}/chromedriver_#{os}#{bit}.zip"
   use_etag true
   use_conditional_get true
-  notifies :run, 'batch[unzip chromedriver]', :immediately if platform?('windows')
-  notifies :unzip, "windows_zipfile[#{driver_path}]", :immediately if platform?('windows')
-  notifies :run, 'execute[unzip chromedriver]', :immediately unless platform?('windows')
+  notifies :run, "powershell_script[unzip #{cache_path}]", :immediately if platform?('windows')
+  notifies :run, "execute[unzip #{cache_path}]", :immediately unless platform?('windows')
 end
 
 case node['platform_family']
@@ -77,7 +65,7 @@ when 'windows'
     delim ::File::PATH_SEPARATOR
     value home
   end
-else # unix
+else # linux
   link '/usr/bin/chromedriver' do
     to "#{driver_path}/chromedriver"
   end

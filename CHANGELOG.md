@@ -1,9 +1,9 @@
 # Changelog
 
-## 1.2.3 - 2016/09/30
+## 2.0.0 - 2016-10-01
 
-- Add proxy support
-- Relax windows cookbook version
+- Drop support for Chef 11
+- Add support for proxy
 
 ## 1.2.2 - 2016/08/16
 
