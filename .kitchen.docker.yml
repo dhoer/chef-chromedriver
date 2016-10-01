@@ -38,9 +38,9 @@ platforms:
       - RUN /usr/bin/apt-get update
       - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
 
-- name: fedora-24
+- name: fedora-latest
   driver:
-    image: fedora:24
+    image: fedora:latest
     intermediate_instructions:
     - RUN yum clean all
     pid_one_command: /usr/lib/systemd/systemd
